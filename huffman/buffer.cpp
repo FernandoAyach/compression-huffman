@@ -28,13 +28,14 @@ void Buffer::add(uint8_t bit) {
 }
 
 void Buffer::flush() {
+  if(n == 0) return;
+
   uint8_t byte = 0;
 
   if(n < 8) {
     for(int i = availableBits(); i < 8; i++) {
       bits[i] = 0;
     }
-    n = 8;
   }
 
   for(int i = 0; i < 8; i++) {
@@ -47,8 +48,6 @@ void Buffer::flush() {
 }
 
 uint8_t Buffer::getBit() {
-  uint8_t bit;
-
   if(n == 0) {
     uint8_t byte;
     int size = fread(&byte, sizeof(uint8_t), 1, file);
@@ -58,11 +57,11 @@ uint8_t Buffer::getBit() {
     for(int i = 0; i < 8; i++) {
       bits[i] = (byte >> (7 - i)) & 1;
     }
-
+    
     n = 8;
   }
 
-  bit = bits[availableBits()];
+  uint8_t bit = bits[availableBits()];
   n--;
 
   return bit;
