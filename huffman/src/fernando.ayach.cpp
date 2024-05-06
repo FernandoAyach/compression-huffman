@@ -10,34 +10,45 @@
 */
 
 #include <iostream>
+#include "../include/heap.h"
+#include <cerrno> 
 
 #define MAX 256
 
 using namespace std;
 
-void countLetters(vector<int>& freq, FILE* in);
+void readInput(vector<int>& letters, vector<int>& freq);
+Node* buildHuffmanTree();
 
 int main(int argc, char** argv) {
-    FILE * in;
     vector<int> freq(MAX, 0);
+    vector<int> letters;
 
-    in = fopen ("../../io/exemplo.txt", "r");
-
-    if (in == nullptr) {
-        cout << "Erro ao abrir o arquivo." << endl;
-        return 0;
-    }
-
-    countLetters(freq, in);
-
-    fclose(in);
+    readInput(letters, freq);
+    buildHuffmanTree(); 
 }
 
-void countLetters(vector<int>& freq, FILE* in) {
+void readInput(vector<int>& letters, vector<int>& freq) {
+    FILE * in;
+    in = fopen("./io/exemplo.txt", "r");
+
+    if (in == nullptr) {
+        cout << "Erro ao abrir o arquivo: " << strerror(errno) << endl;
+        return;
+    }
+
     int c;
     while ((c = fgetc(in)) != EOF) {
+        if(freq[c] == 0) letters.push_back(c);
         freq[c]++;
     }
 
-    for(int i = 0; i < 256; i++) cout << i << " " << freq[i] << endl;
+    for(int i = 0; i < letters.size(); i++) 
+        cout << (char) letters[i] << " " << freq[letters[i]] << endl;
+    
+    fclose(in);
+}
+
+Node* buildHuffmanTree() {
+    return nullptr;
 }
