@@ -1,83 +1,47 @@
-// #include "../../include/hash.h"
+#include <cmath>
 
-// TabelaDispersao::TabelaDispersao(int tamanho) : m(tamanho) {
-//     this->tabela = new Celula*[tamanho];
-//     for(int i = 0; i < tamanho; i++) tabela[i] = nullptr;
-// }
+#include "../../include/hash.h"
 
-// TabelaDispersao::~TabelaDispersao() {
-//     delete[] tabela;
-// }
+HashTable::HashTable(int m) : m(m) {
+    this->table = new Cell*[m];
+    for(int i = 0; i < m; i++) table[i] = nullptr;
+}
 
-// void TabelaDispersao::insere(int x) {
-//     tabela[h(x)] = new Celula(x, tabela[h(x)]);
-// }
+HashTable::~HashTable() {
+    delete[] table;
+}
 
-// bool TabelaDispersao::busca(int x) {
-//     Celula* target = tabela[h(x)];
+void HashTable::insert(int asciiCode, u_int8_t huffCode) {
+    table[h(asciiCode)] = new Cell(asciiCode, huffCode, table[h(asciiCode)]);
+}
 
-//     while(target != nullptr && target->chave != x) {
-//         target = target->prox;
-//     }
+bool HashTable::search(int x) {
+    Cell* target = table[h(x)];
 
-//     return target != nullptr;
-// }
+    while(target != nullptr && target->asciiCode != x) {
+        target = target->next;
+    }
 
-// bool TabelaDispersao::remove(int x) {
-//     Celula *p = nullptr, *q = tabela[h(x)];
+    return target != nullptr;
+}
 
-//     while(q != nullptr && q->chave != x) {
-//         p = q;
-//         q = q->prox;
-//     }
+int HashTable::size() {
+    int size = 0;
 
-//     if(q != nullptr) {
-//         if(p != nullptr) p->prox = q->prox;
-//         else tabela[h(x)] = q->prox;
+    for(int i = 0; i < m; i++) {
+        Cell *p = table[i];
+        while(p != nullptr) {
+            size++;
+            p = p->next;
+        }
+    }
 
-//         delete q;
+    return size;
+}
 
-//         return true;
-//     }
-
-//     return false;
-// }
-
-// double TabelaDispersao::fator_carga() {
-//     return elementos() / (double) m;
-// }
-
-// int TabelaDispersao::elementos() {
-//     int size = 0;
-
-//     for(int i = 0; i < m; i++) {
-//         Celula *p = tabela[i];
-//         while(p != nullptr) {
-//             size++;
-//             p = p->prox;
-//         }
-//     }
-
-//     return size;
-// }
-
-// void TabelaDispersao::escreve() {
-//     for(int i = 0; i < m; i++) {
-//         Celula *p = tabela[i];
-//         printf("%d ", i);
-//         while(p != nullptr) {
-//             printf("%d ", p->chave);
-//             p = p->prox;
-//         }
-//         printf("\n");
-//     }
-//     printf("\n");
-// };
-
-// int TabelaDispersao::h(int x) {
-// //   double A = (sqrt(5) - 1) / 2;
-// //   double fraction = A * x - (int)(A * x);
-// //   int result = m * fraction;
-// //   return result;
-//     return x % m;
-// }
+int HashTable::h(int x) {
+  double A = (sqrt(5) - 1) / 2;
+  double fraction = A * x - (int)(A * x);
+  int result = m * fraction;
+  return result;
+}

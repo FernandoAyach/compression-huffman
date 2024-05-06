@@ -4,8 +4,7 @@ class Cell {
   friend class HashTable;
   
 public:
-  Cell(int asciiCode, uint8_t huffCode, Cell *next = nullptr) : 
-  asciiCode(asciiCode), huffCode(huffCode), next(next) { }
+  Cell(int asciiCode, uint8_t huffCode, Cell *next = nullptr);
   
 private:
   int asciiCode;

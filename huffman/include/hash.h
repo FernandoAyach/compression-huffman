@@ -1,12 +1,11 @@
-#include "../../include/cell.h"
+#include "./cell.h"
 
 class HashTable {
 public:
   HashTable(int size);
   ~HashTable();
-  void insert(int x);
+  void insert(int asciiCode, u_int8_t huffCode);
   bool search(int x);
-  bool remove(int x);
   int size();
   
 private:
