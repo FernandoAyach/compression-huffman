@@ -14,6 +14,7 @@ public:
   void insert(Node *n); 
   Node* extract();
   Node* getMin();
+  void write();
 
 private:
   vector<Node *> v;                    

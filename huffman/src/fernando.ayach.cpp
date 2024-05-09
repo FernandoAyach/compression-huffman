@@ -1,9 +1,5 @@
 // valgrind --leak-check=full --show-reachable=yes --track-fds=yes ./programa <parâmetros>
-// g++ 
-// /Users/ayach/git/huffman-ed/huffman/src/*.cpp 
-// /Users/ayach/git/huffman-ed/huffman/src/heap/*.cpp 
-// /Users/ayach/git/huffman-ed/huffman/src/node/*.cpp 
-// -Wall -pedantic -std=c++11 -o main
+// g++ /Users/ayach/git/huffman-ed/huffman/src/*.cpp /Users/ayach/git/huffman-ed/huffman/src/heap/*.cpp /Users/ayach/git/huffman-ed/huffman/src/node/*.cpp -Wall -pedantic -std=c++11 -o main
 
 /**************************************************
 *
@@ -56,23 +52,24 @@ void readInput(vector<uint8_t>& letters, vector<int>& freq) {
 Node* buildHuffmanTree(vector<uint8_t> letters, vector<int> freq) {
     MinHeap heap = MinHeap();
 
-    printf("Criou a heap\n");
-
     for(auto l : letters) {
-        Node *n = new Node(l);
-        printf("Node %c\n", n->code());
+        Node *n = new Node(l, freq[l]);
         heap.insert(n);
         printf("Inseriu %c\n", l);
     }
 
-    // while(heap.size() != 1) {
-    //     Node *a, *b, *c;
-    //     a = heap.extract();
-    //     b = heap.extract();
+    while(heap.size() != 1) {
+        Node *a, *b, *c;
+        
+        heap.write();
+        a = heap.extract();
+        heap.write();
+        b = heap.extract();
+        heap.write();
 
-    //     c = new Node(0, a->freq() + b->freq(), a, b);
-    //     heap.insert(c);
-    // }
+        c = new Node(0, a->freq() + b->freq(), a, b);
+        heap.insert(c);
+    }
 
     printf("%d\n", heap.getMin()->freq());
     
