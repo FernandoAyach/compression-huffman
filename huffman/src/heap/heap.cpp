@@ -25,8 +25,13 @@ Node* MinHeap::extract() {
   return min;
 }
 
+Node* MinHeap::getMin() {
+  return v[0];
+}
+
 void MinHeap::up(unsigned int i) {
-  while(v[i]->freq() > v[parent(i)]->freq()) {
+  while(v[i]->freq() < v[parent(i)]->freq()) {
+    printf("%d é menor que %d", v[i]->freq(), v[parent(i)]->freq());
     swap(i, parent(i));
     i = parent(i);
   }
@@ -48,15 +53,15 @@ void MinHeap::swap(unsigned int i, unsigned int j) {
   int fAux = v[i]->freq();
   uint8_t cAux = v[i]->code();
 
-  v[i]->f = v[j]->freq();
-  v[i]->c = v[j]->code();
+  v[i]->setFreq(v[j]->freq());
+  v[i]->setCode(v[j]->code());
 
-  v[j]->f = fAux;
-  v[j]->c = cAux;
+  v[j]->setFreq(fAux);
+  v[j]->setCode(cAux);
 }
 
 unsigned int MinHeap::parent(unsigned int i) {
-  return (i - 1) / 2;
+  return i == 0 ? i : (i - 1) / 2;
 }
 
 unsigned int MinHeap::left(unsigned int i) {

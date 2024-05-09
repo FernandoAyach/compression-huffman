@@ -1,5 +1,9 @@
 // valgrind --leak-check=full --show-reachable=yes --track-fds=yes ./programa <parâmetros>
-// g++ /Users/ayach/git/huffman-ed/huffman/src/*.cpp -Wall -pedantic -std=c++11 -o main
+// g++ 
+// /Users/ayach/git/huffman-ed/huffman/src/*.cpp 
+// /Users/ayach/git/huffman-ed/huffman/src/heap/*.cpp 
+// /Users/ayach/git/huffman-ed/huffman/src/node/*.cpp 
+// -Wall -pedantic -std=c++11 -o main
 
 /**************************************************
 *
@@ -10,25 +14,25 @@
 */
 
 #include <iostream>
-#include "../include/heap.h"
 #include <cerrno> 
+#include "../include/heap.h"
 
 #define MAX 256
 
 using namespace std;
 
-void readInput(vector<int>& letters, vector<int>& freq);
-Node* buildHuffmanTree();
+void readInput(vector<uint8_t>& letters, vector<int>& freq);
+Node* buildHuffmanTree(vector<uint8_t> letters, vector<int> freq);
 
 int main(int argc, char** argv) {
     vector<int> freq(MAX, 0);
-    vector<int> letters;
+    vector<uint8_t> letters;
 
     readInput(letters, freq);
-    buildHuffmanTree(); 
+    buildHuffmanTree(letters, freq); 
 }
 
-void readInput(vector<int>& letters, vector<int>& freq) {
+void readInput(vector<uint8_t>& letters, vector<int>& freq) {
     FILE * in;
     in = fopen("./io/exemplo.txt", "r");
 
@@ -49,6 +53,29 @@ void readInput(vector<int>& letters, vector<int>& freq) {
     fclose(in);
 }
 
-Node* buildHuffmanTree() {
+Node* buildHuffmanTree(vector<uint8_t> letters, vector<int> freq) {
+    MinHeap heap = MinHeap();
+
+    printf("Criou a heap\n");
+
+    for(auto l : letters) {
+        Node *n = new Node(l);
+        printf("Node %c\n", n->code());
+        heap.insert(n);
+        printf("Inseriu %c\n", l);
+    }
+
+    // while(heap.size() != 1) {
+    //     Node *a, *b, *c;
+    //     a = heap.extract();
+    //     b = heap.extract();
+
+    //     c = new Node(0, a->freq() + b->freq(), a, b);
+    //     heap.insert(c);
+    // }
+
+    printf("%d\n", heap.getMin()->freq());
+    
+    
     return nullptr;
 }

@@ -1,15 +1,15 @@
 #include "../../include/node.h"
 
-Node::Node(int f, uint8_t c, Node *l = nullptr, Node *r = nullptr) {
+Node::Node(uint8_t c, int f, Node *l, Node *r) {
     this->f = f;
     this->c = c;
     this->l = l;
     this->r = r;
 }
 
-Node::Node(int f = 0, Node *l = nullptr, Node *r = nullptr) {
+Node::Node(int f, Node *l, Node *r) {
     this->f = f;
-    this->c = 0;
+    this->c = -1;
     this->l = l;
     this->r = r;
 }
@@ -33,3 +33,11 @@ Node* Node::right() {
 bool Node::leaf() const {
     return this->l == nullptr && this->r == nullptr;
 }; 
+
+void Node::setFreq(int f) {
+    this->f = f;
+}
+
+void Node::setCode(int c) {
+    this->c = c;
+}
