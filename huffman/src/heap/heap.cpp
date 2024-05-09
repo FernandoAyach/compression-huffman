@@ -18,21 +18,23 @@ void MinHeap::insert(Node *n) {
 }
 
 Node* MinHeap::extract() {
+  write();
   Node* min = this->v[0];
   v[0] = v[size() - 1];
   v.pop_back();
   down(0);
 
+  write();
   return min;
-}
-
-Node* MinHeap::getMin() {
-  return v[0];
 }
 
 void MinHeap::write() {
   for(int i = 0; i < size(); i++) printf("(%d %c) ", v[i]->freq(), v[i]->code());
   printf("\n");
+}
+
+Node* MinHeap::min() {
+  return v[0];
 }
 
 void MinHeap::up(unsigned int i) {
@@ -55,14 +57,9 @@ void MinHeap::down(unsigned int i) {
 }
 
 void MinHeap::swap(unsigned int i, unsigned int j) {
-  int fAux = v[i]->freq();
-  uint8_t cAux = v[i]->code();
-
-  v[i]->setFreq(v[j]->freq());
-  v[i]->setCode(v[j]->code());
-
-  v[j]->setFreq(fAux);
-  v[j]->setCode(cAux);
+  Node* aux = v[i];
+  v[i] = v[j];
+  v[j] = aux;
 }
 
 unsigned int MinHeap::parent(unsigned int i) {

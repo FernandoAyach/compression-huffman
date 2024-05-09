@@ -13,8 +13,8 @@ public:
   size_t size();        
   void insert(Node *n); 
   Node* extract();
-  Node* getMin();
   void write();
+  Node* min();
 
 private:
   vector<Node *> v;                    
