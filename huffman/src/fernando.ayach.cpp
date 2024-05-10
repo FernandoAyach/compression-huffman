@@ -1,5 +1,5 @@
 // valgrind --leak-check=full --show-reachable=yes --track-fds=yes ./programa <parâmetros>
-// g++ /Users/ayach/git/huffman-ed/huffman/src/*.cpp /Users/ayach/git/huffman-ed/huffman/src/heap/*.cpp /Users/ayach/git/huffman-ed/huffman/src/node/*.cpp /Users/ayach/git/huffman-ed/huffman/src/hash/*.cpp /Users/ayach/git/huffman-ed/huffman/src/cell/*.cpp -Wall -pedantic -std=c++11 -o main
+// j
 
 /**************************************************
  *
@@ -103,7 +103,7 @@ void getCodes(HashTable *hashTable, Node *u, vector<int>& stack, bool left) {
         return;
     }
 
-    stack.push_back(left ? 0 : 1);
+    stack.push_back(0);
 
     getCodes(hashTable, u->left(), stack);
 
