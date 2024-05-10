@@ -1,14 +1,19 @@
 #pragma once
 #include <cstdint>
+#include <string>
+
+using std::string;
 
 class Cell {
   friend class HashTable;
   
 public:
-  Cell(int asciiCode, uint8_t huffCode, Cell *next = nullptr);
+  Cell(int asciiCode, string huffCode, Cell *next = nullptr);
+
+  string getHuffCode();
   
 private:
   int asciiCode;
-  uint8_t huffCode;
+  string huffCode;
   Cell *next;
 };

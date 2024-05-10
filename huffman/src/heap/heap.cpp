@@ -23,8 +23,6 @@ Node* MinHeap::extract() {
   v[0] = v[size() - 1];
   v.pop_back();
   down(0);
-
-  write();
   return min;
 }
 

@@ -21,7 +21,7 @@ using namespace std;
 void readInput(vector<uint8_t> &letters, vector<int> &freq);
 Node* buildHuffmanTree(vector<uint8_t> letters, vector<int> freq);
 void storeCodesInHash(Node *root);
-void getCodes(HashTable *hashTable, Node *u);
+void getCodes(HashTable *hashTable, Node *u, vector<int>& stack, bool left = true);
 
 int main(int argc, char **argv)
 {
@@ -31,8 +31,6 @@ int main(int argc, char **argv)
 
     readInput(letters, freq);
     root = buildHuffmanTree(letters, freq);
-    printf("%d\n", root->freq());
-    printf("%d %d\n", root->left()->freq(), root->right()->freq());
     storeCodesInHash(root);
 }
 
@@ -82,23 +80,36 @@ Node *buildHuffmanTree(vector<uint8_t> letters, vector<int> freq){
     }
     heap->write();
 
-    printf("NO FINAL: %d\n", heap->min()->freq());
     return heap->min();
 }
 
-void storeCodesInHash(Node *root)
-{
+void storeCodesInHash(Node *root) {
     HashTable *hashTable = new HashTable(MAX);
-    getCodes(hashTable, root);
+    vector<int> stack;
+    getCodes(hashTable, root, stack);
 }
 
-void getCodes(HashTable *hashTable, Node *u) {
-    // USAR UMA PILHA
+void getCodes(HashTable *hashTable, Node *u, vector<int>& stack, bool left) {
     if (u->leaf()) {
-        printf("%c\n", u->code());
+        printf("%c %d: ", u->code(), u->freq());
+        string huff = "";
+        for(auto bit : stack) {
+            huff += (bit == 0) ? '0' : '1';
+        }
+        printf("%s\n", huff.c_str());
+        
+        hashTable->insert(u->code(), huff);
+        printf("%s\n", hashTable->get(u->code())->getHuffCode().c_str());
         return;
     }
 
-    getCodes(hashTable, u->left());
-    getCodes(hashTable, u->right());
+    stack.push_back(left ? 0 : 1);
+
+    getCodes(hashTable, u->left(), stack);
+
+    stack.pop_back();
+    stack.push_back(1);
+
+    getCodes(hashTable, u->right(), stack, false);
+    stack.pop_back();
 }

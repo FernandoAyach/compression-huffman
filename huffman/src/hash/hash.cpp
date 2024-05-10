@@ -11,18 +11,18 @@ HashTable::~HashTable() {
     delete[] table;
 }
 
-void HashTable::insert(int asciiCode, u_int8_t huffCode) {
+void HashTable::insert(uint8_t asciiCode, string huffCode) {
     table[h(asciiCode)] = new Cell(asciiCode, huffCode, table[h(asciiCode)]);
 }
 
-bool HashTable::search(int x) {
+Cell* HashTable::get(int x) {
     Cell* target = table[h(x)];
 
     while(target != nullptr && target->asciiCode != x) {
         target = target->next;
     }
 
-    return target != nullptr;
+    return target;
 }
 
 int HashTable::size() {

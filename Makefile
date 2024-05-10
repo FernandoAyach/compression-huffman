@@ -21,11 +21,17 @@ SRCS = $(wildcard $(SRCDIR)/*.cpp) \
        $(wildcard $(HASHDIR)/*.cpp) \
        $(wildcard $(CELLDIR)/*.cpp)
 
+# Lista de objetos
+OBJS = $(SRCS:.cpp=.o)
+
 # Comando padrão (compilação do programa)
 all: $(TARGET)
 
 # Regra para compilar os arquivos de origem em objetos
-$(TARGET): $(CC) $(SRCS) $(CFLAGS) $^ -o $@
+%.o: %.cpp $(CC) $(CFLAGS) -c $< -o $@
+
+# Regra para linkar os objetos e gerar o executável
+$(TARGET): $(OBJS) $(CC) $(OBJS) -o $(TARGET)
 
 # Regra para limpar os arquivos gerados durante a compilação
-clean: $(RM) $(TARGET)
+clean: $(RM) $(OBJS) $(TARGET)

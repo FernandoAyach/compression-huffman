@@ -5,8 +5,8 @@ class HashTable {
 public:
   HashTable(int size);
   ~HashTable();
-  void insert(int asciiCode, u_int8_t huffCode);
-  bool search(int x);
+  void insert(uint8_t asciiCode, string huffCode);
+  Cell* get(int x);
   int size();
   
 private:
