@@ -1,37 +1,32 @@
-# Nome do programa de saída
-TARGET = main
+CXX = g++
+SRC_DIR = /Users/ayach/git/huffman-ed/huffman/src
+COMPRESSOR_SRC_DIR = $(SRC_DIR)/compressor
+HEAP_SRC_DIR = $(SRC_DIR)/heap
+NODE_SRC_DIR = $(SRC_DIR)/node
+HASH_SRC_DIR = $(SRC_DIR)/hash
+CELL_SRC_DIR = $(SRC_DIR)/cell
+BUFFER_SRC_DIR = $(SRC_DIR)/buffer
 
-# Compilador
-CC = g++
+SRCS := $(wildcard $(COMPRESSOR_SRC_DIR)/*.cpp) \
+        $(wildcard $(SRC_DIR)/*.cpp) \
+        $(wildcard $(HEAP_SRC_DIR)/*.cpp) \
+        $(wildcard $(NODE_SRC_DIR)/*.cpp) \
+        $(wildcard $(HASH_SRC_DIR)/*.cpp) \
+        $(wildcard $(CELL_SRC_DIR)/*.cpp) \
+        $(wildcard $(BUFFER_SRC_DIR)/*.cpp)
 
-# Opções de compilação
-CFLAGS = -Wall -pedantic -std=c++11
+OBJS := $(SRCS:.cpp=.o)
+EXECUTABLE = main
 
-# Diretórios dos arquivos de origem
-SRCDIR = /Users/ayach/git/huffman-ed/huffman/src
-HEAPDIR = /Users/ayach/git/huffman-ed/huffman/src/heap
-NODEDIR = /Users/ayach/git/huffman-ed/huffman/src/node
-HASHDIR = /Users/ayach/git/huffman-ed/huffman/src/hash
-CELLDIR = /Users/ayach/git/huffman-ed/huffman/src/cell
+CXXFLAGS = -Wall -pedantic -std=c++11
 
-# Arquivos de origem
-SRCS = $(wildcard $(SRCDIR)/*.cpp) \
-       $(wildcard $(HEAPDIR)/*.cpp) \
-       $(wildcard $(NODEDIR)/*.cpp) \
-       $(wildcard $(HASHDIR)/*.cpp) \
-       $(wildcard $(CELLDIR)/*.cpp)
+all: $(EXECUTABLE)
 
-# Lista de objetos
-OBJS = $(SRCS:.cpp=.o)
+$(EXECUTABLE): $(OBJS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Comando padrão (compilação do programa)
-all: $(TARGET)
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Regra para compilar os arquivos de origem em objetos
-%.o: %.cpp $(CC) $(CFLAGS) -c $< -o $@
-
-# Regra para linkar os objetos e gerar o executável
-$(TARGET): $(OBJS) $(CC) $(OBJS) -o $(TARGET)
-
-# Regra para limpar os arquivos gerados durante a compilação
-clean: $(RM) $(OBJS) $(TARGET)
+clean:
+	rm -f $(EXECUTABLE) $(OBJS)

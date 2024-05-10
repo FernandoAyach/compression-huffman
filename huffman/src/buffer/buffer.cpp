@@ -1,22 +1,4 @@
-#include <cstdio>
-#include <cstdint>
-
-class Buffer {
-public:
-  Buffer(FILE *file);
-
-  void add(uint8_t bit);
-  void flush();
-
-  uint8_t getBit();
-  uint8_t ocuppiedBits();
-  uint8_t availableBits();
-  
-private:
-  FILE *file;   
-  uint8_t bits[8]; 
-  uint8_t n; 
-};
+#include "../../include/buffer.h"
   
 Buffer::Buffer(FILE *file) : file(file), n(0) { }
 
@@ -73,25 +55,4 @@ uint8_t Buffer::ocuppiedBits() {
 
 uint8_t Buffer::availableBits() {
   return 8 - n;
-}
-
-int main() {
-  FILE *original, *copia;
-  original = fopen("original.txt", "rb");
-  copia = fopen("copia.txt", "wb");
-
-  Buffer in(original), out(copia);
-  uint8_t bit;
-  
-  while ((bit = in.getBit()) != 2) {
-    putchar('0' + bit);
-    out.add(bit);
-  }
-  putchar('\n');
-  out.flush();
-
-  fclose(original);
-  fclose(copia);
-  
-  return 0;
 }
