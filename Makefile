@@ -28,5 +28,8 @@ $(EXECUTABLE): $(OBJS)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+run: $(EXECUTABLE)
+	./$(EXECUTABLE)
+
 clean:
 	rm -f $(EXECUTABLE) $(OBJS)

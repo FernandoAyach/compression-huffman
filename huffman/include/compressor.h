@@ -10,7 +10,8 @@ using std::cout;
 
 class Compressor {
 public:
-    Compressor();
+    Compressor(const char* in, const char* out);
+    ~Compressor();
 
     void compress();
     void readInput();
@@ -24,4 +25,7 @@ private:
     vector<uint8_t> letters;
     Node *root;
     HashTable *hashTable;
+
+    FILE* in;
+    FILE* out;
 };

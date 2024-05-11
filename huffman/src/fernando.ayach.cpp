@@ -1,5 +1,4 @@
 // valgrind --leak-check=full --show-reachable=yes --track-fds=yes ./programa <parâmetros>
-// g++ /Users/ayach/git/huffman-ed/huffman/src/compressor/*.cpp /Users/ayach/git/huffman-ed/huffman/src/*.cpp /Users/ayach/git/huffman-ed/huffman/src/heap/*.cpp /Users/ayach/git/huffman-ed/huffman/src/node/*.cpp /Users/ayach/git/huffman-ed/huffman/src/hash/*.cpp /Users/ayach/git/huffman-ed/huffman/src/cell/*.cpp /Users/ayach/git/huffman-ed/huffman/src/buffer/*.cpp -Wall -pedantic -std=c++11 -o main
 
 /**************************************************
  *
@@ -11,14 +10,10 @@
 
 #include "../include/compressor.h"
 
-//void createCompressedArchive(HashTable* hashTable, vector<uint8_t> letters, FILE* in, FILE* out);
-
 int main(int argc, char **argv) {
-    Compressor* compressor = new Compressor();
+    const char* origin = "/Users/ayach/git/huffman-ed/io/exemplo.txt";
+    const char* destiny = "../../io/exemplo (1).huff";
+
+    Compressor* compressor = new Compressor(origin, destiny);
     compressor->compress();
 }
-
-// void createCompressedArchive(HashTable* hashTable, vector<uint8_t> letters, FILE* in, FILE* out) {
-//     uint16_t k = letters.size();
-//     uint32_t t;
-// }

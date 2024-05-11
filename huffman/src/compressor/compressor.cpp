@@ -1,6 +1,17 @@
 #include "../../include/compressor.h"
 
-Compressor::Compressor() : freq(MAX, 0) {}
+Compressor::Compressor(const char* in, const char* out) : freq(MAX, 0) {
+    this->in = fopen(in, "r");
+    this->out = fopen(out, "w");
+}
+
+Compressor::~Compressor() {
+    delete hashTable;
+    delete root; // Percorrer toda a arvore
+
+    fclose(in);
+    fclose(out);
+}
 
 void Compressor::compress() {
     readInput();
@@ -10,11 +21,7 @@ void Compressor::compress() {
 }
 
 void Compressor::readInput() {
-    FILE *in;
-    in = fopen("./io/exemplo.txt", "r");
-
-    if (in == nullptr)
-    {
+    if (in == nullptr) {
         cout << "Erro ao abrir o arquivo: " << strerror(errno) << "\n";
         return;
     }
@@ -30,7 +37,6 @@ void Compressor::readInput() {
     for (int i = 0; i < letters.size(); i++)
         cout << (char)letters[i] << " " << freq[letters[i]] << "\n";
 
-    fclose(in);
 }
 
 void Compressor::buildHuffmanTree(){
