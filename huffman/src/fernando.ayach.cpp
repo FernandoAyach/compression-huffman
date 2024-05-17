@@ -12,7 +12,7 @@
 
 int main(int argc, char **argv) {
     const char* origin = "/Users/ayach/git/huffman-ed/io/exemplo.txt";
-    const char* destiny = "../../io/exemplo (1).huff";
+    const char* destiny = "/Users/ayach/git/huffman-ed/io/out.huff";
 
     Compressor* compressor = new Compressor(origin, destiny);
     compressor->compress();

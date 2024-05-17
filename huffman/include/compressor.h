@@ -17,12 +17,15 @@ public:
     void readInput();
     void buildHuffmanTree();
     void storeCodesInHash();
-    void getCodes(Node *u, bool left = true);
+    void getCodes(Node *u);
+    void getTreeCodes(Node *u);
+    void writeCompressedArchive();
 
 private:
     vector<int> freq;
     vector<int> stack;
     vector<uint8_t> letters;
+    vector<uint8_t> bitsTree;
     Node *root;
     HashTable *hashTable;
 

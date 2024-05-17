@@ -24,7 +24,7 @@ void Buffer::flush() {
     byte = byte << 1;
     byte += bits[i];
   }
-
+  
   fwrite(&byte, sizeof(uint8_t), 1, file);
   n = 0;
 }

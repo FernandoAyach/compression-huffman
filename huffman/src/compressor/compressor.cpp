@@ -1,4 +1,5 @@
 #include "../../include/compressor.h"
+#include "../../include/buffer.h"
 
 Compressor::Compressor(const char* in, const char* out) : freq(MAX, 0) {
     this->in = fopen(in, "r");
@@ -18,10 +19,12 @@ void Compressor::compress() {
     buildHuffmanTree();
     hashTable = new HashTable(letters.size());
     storeCodesInHash();
+    getTreeCodes(root);
+    writeCompressedArchive();
 }
 
 void Compressor::readInput() {
-    if (in == nullptr) {
+    if (in == nullptr || out == nullptr) {
         cout << "Erro ao abrir o arquivo: " << strerror(errno) << "\n";
         return;
     }
@@ -36,7 +39,6 @@ void Compressor::readInput() {
 
     for (int i = 0; i < letters.size(); i++)
         cout << (char)letters[i] << " " << freq[letters[i]] << "\n";
-
 }
 
 void Compressor::buildHuffmanTree(){
@@ -68,7 +70,7 @@ void Compressor::storeCodesInHash() {
     getCodes(root);
 }
 
-void Compressor::getCodes(Node *u, bool left) {
+void Compressor::getCodes(Node *u) {
     if (u->leaf()) {
         string huff = "";
         for(auto bit : stack) {
@@ -87,6 +89,41 @@ void Compressor::getCodes(Node *u, bool left) {
     stack.pop_back();
     stack.push_back(1);
 
-    getCodes(u->right(), false);
+    getCodes(u->right());
     stack.pop_back();
+}
+
+void Compressor::getTreeCodes(Node *u) {
+    if (u->leaf()) {
+        bitsTree.push_back(1);
+        return;
+    }
+
+    bitsTree.push_back(0);
+
+    getTreeCodes(u->left());
+    getTreeCodes(u->right());
+}
+
+void Compressor::writeCompressedArchive() {
+    Buffer buffOut(out), buffIn(in);
+    int16_t k = letters.size();
+
+    for (int i = 0; i < 16; i++) {
+        buffOut.add((k >> (7 - i)) & 1);
+    }
+
+    int32_t t = 0;
+
+    for (int i = 0; i < letters.size(); i++) {
+        t += freq[letters[i]];
+    }
+
+    for (int i = 0; i < 32; ++i) {
+        buffOut.add((t >> (7 - i)) & 1);
+    }
+
+    // for(int i = 0; i < bitsTree.size(); i++) {
+
+    // }
 }
