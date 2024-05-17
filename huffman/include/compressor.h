@@ -31,4 +31,6 @@ private:
 
     FILE* in;
     FILE* out;
+    const char* origin;
+    const char* destiny;
 };

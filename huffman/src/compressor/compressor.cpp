@@ -2,6 +2,8 @@
 #include "../../include/buffer.h"
 
 Compressor::Compressor(const char* in, const char* out) : freq(MAX, 0) {
+    this->origin = in;
+    this->destiny = out;
     this->in = fopen(in, "r");
     this->out = fopen(out, "w");
 }
@@ -106,24 +108,21 @@ void Compressor::getTreeCodes(Node *u) {
 }
 
 void Compressor::writeCompressedArchive() {
+    in = fopen(origin, "r");
     Buffer buffOut(out), buffIn(in);
     int16_t k = letters.size();
 
-    for (int i = 0; i < 16; i++) {
-        buffOut.add((k >> (7 - i)) & 1);
-    }
-
+    fwrite(&k, sizeof(int16_t), 1, out);
     int32_t t = 0;
 
     for (int i = 0; i < letters.size(); i++) {
         t += freq[letters[i]];
     }
 
-    for (int i = 0; i < 32; ++i) {
-        buffOut.add((t >> (7 - i)) & 1);
+    fwrite(&t, sizeof(int32_t), 1, out);
+
+    for (int i = 0; i < bitsTree.size(); i++) {
+        buffOut.add(bitsTree[i]);
     }
-
-    // for(int i = 0; i < bitsTree.size(); i++) {
-
-    // }
+    buffOut.add(0);
 }
