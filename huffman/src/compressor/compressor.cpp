@@ -124,5 +124,13 @@ void Compressor::writeCompressedArchive() {
     for (int i = 0; i < bitsTree.size(); i++) {
         buffOut.add(bitsTree[i]);
     }
-    buffOut.add(0);
+
+    int caracter;
+    while ((caracter = fgetc(in)) != EOF) {
+       string huffCode = hashTable->get(caracter)->getHuffCode();
+       for(auto bit : huffCode) {
+            buffOut.add(bit == '1' ? 1 : 0);
+       }
+    }
+    buffOut.flush();
 }

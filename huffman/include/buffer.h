@@ -12,9 +12,10 @@ public:
   uint8_t getBit();
   uint8_t ocuppiedBits();
   uint8_t availableBits();
-  
+
 private:
   FILE *file;   
   uint8_t bits[8]; 
   uint8_t n; 
+  
 };
