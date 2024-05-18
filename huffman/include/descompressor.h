@@ -8,12 +8,12 @@
 
 using std::cout;
 
-class Compressor {
+class Decompressor {
 public:
-    Compressor(const char* in, const char* out);
-    ~Compressor();
+    Decompressor(const char* in, const char* out);
+    ~Decompressor();
 
-    void compress();
+    void decompress();
 
 private:
     void readInput();
@@ -26,7 +26,6 @@ private:
     vector<int> freq;
     vector<int> stack;
     vector<uint8_t> letters;
-    vector<uint8_t> lettersPreOrder;
     vector<uint8_t> bitsTree;
     Node *root;
     HashTable *hashTable;

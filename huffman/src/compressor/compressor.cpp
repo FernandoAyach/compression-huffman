@@ -80,6 +80,7 @@ void Compressor::getCodes(Node *u) {
         }
         
         hashTable->insert(u->code(), huff);
+        lettersPreOrder.push_back(u->code());
         printf("%c %s\n", u->code(), hashTable->get(u->code())->getHuffCode().c_str());
         return;
     }
@@ -120,6 +121,10 @@ void Compressor::writeCompressedArchive() {
     }
 
     fwrite(&t, sizeof(int32_t), 1, out);
+
+    for (int i = 0; i < lettersPreOrder.size(); i++) {
+        fwrite(&lettersPreOrder[i], sizeof(int8_t), 1, out);
+    }
 
     for (int i = 0; i < bitsTree.size(); i++) {
         buffOut.add(bitsTree[i]);
