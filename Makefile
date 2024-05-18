@@ -1,6 +1,7 @@
 CXX = g++
 SRC_DIR = /Users/ayach/git/huffman-ed/huffman/src
 COMPRESSOR_SRC_DIR = $(SRC_DIR)/compressor
+DECOMPRESSOR_SRC_DIR = $(SRC_DIR)/decompressor
 HEAP_SRC_DIR = $(SRC_DIR)/heap
 NODE_SRC_DIR = $(SRC_DIR)/node
 HASH_SRC_DIR = $(SRC_DIR)/hash
@@ -8,6 +9,7 @@ CELL_SRC_DIR = $(SRC_DIR)/cell
 BUFFER_SRC_DIR = $(SRC_DIR)/buffer
 
 SRCS := $(wildcard $(COMPRESSOR_SRC_DIR)/*.cpp) \
+        $(wildcard $(DECOMPRESSOR_SRC_DIR)/*.cpp) \
         $(wildcard $(SRC_DIR)/*.cpp) \
         $(wildcard $(HEAP_SRC_DIR)/*.cpp) \
         $(wildcard $(NODE_SRC_DIR)/*.cpp) \
