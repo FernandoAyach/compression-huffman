@@ -111,28 +111,29 @@ void Compressor::getTreeCodes(Node *u) {
 void Compressor::writeCompressedArchive() {
     in = fopen(origin, "r");
     Buffer buffOut(out), buffIn(in);
-    int16_t k = letters.size();
+    uint16_t k = letters.size();
 
-    fwrite(&k, sizeof(int16_t), 1, out);
-    int32_t t = 0;
+    fwrite(&k, sizeof(uint16_t), 1, out);
+    uint32_t t = 0;
 
     for (int i = 0; i < letters.size(); i++) {
         t += freq[letters[i]];
     }
 
-    fwrite(&t, sizeof(int32_t), 1, out);
+    fwrite(&t, sizeof(uint32_t), 1, out);
 
     for (int i = 0; i < lettersPreOrder.size(); i++) {
-        fwrite(&lettersPreOrder[i], sizeof(int8_t), 1, out);
+        fwrite(&lettersPreOrder[i], sizeof(uint8_t), 1, out);
     }
 
     for (int i = 0; i < bitsTree.size(); i++) {
         buffOut.add(bitsTree[i]);
     }
-
+    printf("CABEÇALHO:\n");
     int caracter;
     while ((caracter = fgetc(in)) != EOF) {
        string huffCode = hashTable->get(caracter)->getHuffCode();
+       printf("%c %s\n", caracter, huffCode.c_str());
        for(auto bit : huffCode) {
             buffOut.add(bit == '1' ? 1 : 0);
        }
