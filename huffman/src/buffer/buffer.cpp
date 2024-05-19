@@ -15,7 +15,7 @@ void Buffer::flush() {
   uint8_t byte = 0;
 
   if(n < 8) {
-    for(int i = availableBits(); i < 8; i++) {
+    for(int i = n; i < 8; i++) {
       bits[i] = 0;
     }
   }
