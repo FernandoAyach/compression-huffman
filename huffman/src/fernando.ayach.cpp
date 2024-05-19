@@ -23,4 +23,6 @@ int main(int argc, char **argv) {
 
     Decompressor* decompressor = new Decompressor(arch2, arch3);
     decompressor->decompress();
+
+    delete decompressor;
 }

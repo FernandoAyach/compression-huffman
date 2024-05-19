@@ -18,6 +18,8 @@ public:
 
   void setFreq(int f);
   void setCode(int c);
+  void setLeft(Node* l);
+  void setRight(Node* r);
   
 private:
   int f;

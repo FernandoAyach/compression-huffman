@@ -41,3 +41,11 @@ void Node::setFreq(int f) {
 void Node::setCode(int c) {
     this->c = c;
 }
+
+void Node::setLeft(Node *l) {
+    this->l = l;
+}
+
+void Node::setRight(Node *r) {
+    this->r = r;
+}

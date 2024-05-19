@@ -15,10 +15,14 @@ public:
     void decompress();
 
 private:
-    void readHeader(); 
+    void buildHuffman(Node* &u, Buffer &buffer, int &i, bool left);
+    void writeDecompressedArchive(Node* u, Buffer &buffer, int &i);
+    void printTree(Node* u);
+
     uint16_t k;
     uint32_t t;
     vector<uint8_t> lettersPreOrder;
+    vector<uint8_t> bitsTree;
     Node* root;
 
     FILE* in;
