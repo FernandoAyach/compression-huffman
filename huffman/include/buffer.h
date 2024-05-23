@@ -5,6 +5,7 @@
 class Buffer {
 public:
   Buffer(FILE *file);
+  ~Buffer();
 
   void add(uint8_t bit);
   void flush();
