@@ -1,5 +1,5 @@
 CXX = g++
-SRC_DIR = /Users/ayach/git/huffman-ed/huffman/src
+SRC_DIR = ./huffman/src
 COMPRESSOR_SRC_DIR = $(SRC_DIR)/compressor
 DECOMPRESSOR_SRC_DIR = $(SRC_DIR)/decompressor
 HEAP_SRC_DIR = $(SRC_DIR)/heap
@@ -31,7 +31,7 @@ $(EXECUTABLE): $(OBJS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run: $(EXECUTABLE)
-	./$(EXECUTABLE)
+	./$(EXECUTABLE) $(ARGS)
 
 clean:
 	rm -f $(EXECUTABLE) $(OBJS)

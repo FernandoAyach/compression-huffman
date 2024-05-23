@@ -84,7 +84,6 @@ void Decompressor::writeDecompressedArchive(Node* u, Buffer &buffer, int &i) {
     if(i == t) return;
 
     if (u->leaf()) {
-        printf("%d\n", i);
         i++;
         uint8_t code = u->code();
         fwrite(&code, sizeof(uint8_t), 1, out);

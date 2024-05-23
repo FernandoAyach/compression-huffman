@@ -8,21 +8,25 @@
  *
  */
 
+// Comandos para executar o sistema:
+// make run ARGS="c exemplo.txt exemplo.huff"
+// make run ARGS="d exemplo.huff exemplo2.txt"
+
 #include "../include/compressor.h"
 #include "../include/decompressor.h"
+#include <cstring>
 
 int main(int argc, char **argv) {
-    const char* arch1 = "/Users/ayach/git/huffman-ed/io/exemplo.txt";
-    const char* arch2 = "/Users/ayach/git/huffman-ed/io/out.huff";
-    const char* arch3 = "/Users/ayach/git/huffman-ed/io/exemplo2.txt";
-
-    Compressor* compressor = new Compressor(arch1, arch2);
-    compressor->compress();
-
-    delete compressor;
-
-    Decompressor* decompressor = new Decompressor(arch2, arch3);
+    if(argv[1][0] == 'c') {
+        printf("%c %s %s\n", argv[1][0], argv[2], argv[3]);
+        Compressor* compressor = new Compressor(argv[2], argv[3]);
+        compressor->compress();
+        delete compressor;
+        return 0;
+    }
+    
+    Decompressor* decompressor = new Decompressor(argv[2], argv[3]);
     decompressor->decompress();
-
     delete decompressor;
+    return 0;
 }
