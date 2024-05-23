@@ -17,5 +17,4 @@ private:
   FILE *file;   
   uint8_t bits[8]; 
   uint8_t n; 
-  
 };

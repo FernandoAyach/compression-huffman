@@ -22,6 +22,7 @@ private:
     void getCodes(Node *u);
     void getTreeCodes(Node *u);
     void writeCompressedArchive();
+    void killHuffman(Node *u);
 
     vector<int> freq;
     vector<int> stack;

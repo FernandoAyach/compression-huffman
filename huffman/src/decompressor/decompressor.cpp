@@ -9,8 +9,17 @@ Decompressor::Decompressor(const char* in, const char* out) {
 }
 
 Decompressor::~Decompressor() {
+    killHuffman(root);
     fclose(in);
     fclose(out);
+}
+
+void Decompressor::killHuffman(Node* u) {
+    if(u == nullptr) return;
+
+    killHuffman(u->left());
+    killHuffman(u->right());
+    delete u;
 }
 
 void Decompressor::decompress() {

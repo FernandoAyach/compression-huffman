@@ -10,10 +10,18 @@ Compressor::Compressor(const char* in, const char* out) : freq(MAX, 0) {
 
 Compressor::~Compressor() {
     delete hashTable;
-    delete root; // Percorrer toda a arvore
+    killHuffman(root);
 
     fclose(in);
     fclose(out);
+}
+
+void Compressor::killHuffman(Node* u) {
+    if(u == nullptr) return;
+
+    killHuffman(u->left());
+    killHuffman(u->right());
+    delete u;
 }
 
 void Compressor::compress() {
