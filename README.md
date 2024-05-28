@@ -1,11 +1,11 @@
-# Algoritmo de Huffman
+# :bulb: Algoritmo de Huffman
 
 O algoritmo de huffman é um algoritmo de compactação de arquivos sem perda de informações. No computador, 
 os caracteres (ou qualquer outra informação) tem quantidades padrão de bytes. No entanto, dependendo da informação, não precisamos
 usar toda a quantidade de bits que o computador reserva para determinado dado. Dessa forma, no algoritmo de huffman, geramos códigos para cada dado, 
 seguindo a regra de que os caracteres que mais se repetem possuem códigos menores.
 
-### Para compactar os dados:
+### :mailbox: Para compactar os dados:
 
 1. Contamos a frequência de cada letra.
 
@@ -17,7 +17,7 @@ seguindo a regra de que os caracteres que mais se repetem possuem códigos menor
 
 5. Inserimos num arquivo binário o texto mapeado para os códigos de huffman e um cabeçalho com informações necessárias para a descompactação.
 
-### Para descompactar os dados:
+### :mailbox_with_mail: Para descompactar os dados:
 
 1. Lemos o binário com o cabeçalho e o texto compactado
 
@@ -31,16 +31,16 @@ seguindo a regra de que os caracteres que mais se repetem possuem códigos menor
 
 O uso é bem simples, por conta do Makefile. Se já tiver o compilador para C++ (g++), faça o clone na sua máquina e digite os seguintes comandos:
 
-## Compactar
+## :inbox_tray: Compactar
 ```
 make run ARGS="c nome_do_arquivo_a_ser_compactado.txt nome_do_compactado.huff"
 ```
 
-## Descompactar
+## :outbox_tray: Descompactar
 ```
-make run ARGS="make run ARGS="d nome_do_compactado.huff nome_do_arquivo_descompactado.txt""
+make run ARGS="d nome_do_compactado.huff nome_do_arquivo_descompactado.txt"
 ```
 
-## Observações: 
+## :pushpin: Observações: 
 - Você pode compactar/descompactar qualquer arquivo, de qualquer extensão, mas é importante que o compactado seja .huff.
 - Se estiver usando Vscode, você pode visualizar o binário gerado com a extensão HexEditor.
