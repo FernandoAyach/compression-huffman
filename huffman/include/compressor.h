@@ -31,6 +31,7 @@ private:
     vector<uint8_t> bitsTree;
     Node *root;
     HashTable *hashTable;
+    MinHeap *heap;
 
     FILE* in;
     FILE* out;

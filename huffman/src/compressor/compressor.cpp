@@ -9,11 +9,11 @@ Compressor::Compressor(const char* in, const char* out) : freq(MAX, 0) {
 }
 
 Compressor::~Compressor() {
-    delete hashTable;
-    killHuffman(root);
-
     fclose(in);
     fclose(out);
+    killHuffman(root);
+    delete hashTable;
+    delete heap;
 }
 
 void Compressor::killHuffman(Node* u) {
@@ -26,11 +26,13 @@ void Compressor::killHuffman(Node* u) {
 
 void Compressor::compress() {
     readInput();
+    heap = new MinHeap();
     buildHuffmanTree();
     hashTable = new HashTable(letters.size());
     storeCodesInHash();
     getTreeCodes(root);
     writeCompressedArchive();
+    printf("Arquivo comprimido com sucesso!\n");
 }
 
 void Compressor::readInput() {
@@ -46,18 +48,14 @@ void Compressor::readInput() {
             letters.push_back(c);
         freq[c]++;
     }
-
-    for (int i = 0; i < letters.size(); i++)
-        cout << (char)letters[i] << " " << freq[letters[i]] << "\n";
 }
 
 void Compressor::buildHuffmanTree(){
-    MinHeap* heap = new MinHeap();
+    this->heap = new MinHeap();
 
     for (auto l : letters) {
         Node *n = new Node(l, freq[l]);
         heap->insert(n);
-        printf("Inseriu %c\n", l);
     }
 
     Node *a, *b, *c;
@@ -67,10 +65,8 @@ void Compressor::buildHuffmanTree(){
         b = heap->extract();
 
         c = new Node(0, a->freq() + b->freq(), a, b);
-        printf("NOVO NO HUFFMAN: (%d %c) (%d %c) (%d %c)\n", c->freq(), c->code(), c->left()->freq(), c->left()->code(), c->right()->freq(), c->right()->code());
         heap->insert(c);
     }
-    heap->write();
 
     root = heap->min();
 }
@@ -89,7 +85,6 @@ void Compressor::getCodes(Node *u) {
         
         hashTable->insert(u->code(), huff);
         lettersPreOrder.push_back(u->code());
-        printf("%c %s\n", u->code(), hashTable->get(u->code())->getHuffCode().c_str());
         return;
     }
 
@@ -137,14 +132,14 @@ void Compressor::writeCompressedArchive() {
     for (int i = 0; i < bitsTree.size(); i++) {
         buffOut.add(bitsTree[i]);
     }
-    printf("CABEÇALHO:\n");
+
     int caracter;
     while ((caracter = fgetc(in)) != EOF) {
        string huffCode = hashTable->get(caracter)->getHuffCode();
-       printf("%c %s\n", caracter, huffCode.c_str());
        for(auto bit : huffCode) {
             buffOut.add(bit == '1' ? 1 : 0);
        }
     }
     buffOut.flush();
+    fclose(in);
 }

@@ -2,9 +2,7 @@
   
 Buffer::Buffer(FILE *file) : file(file), n(0) { }
 
-Buffer::~Buffer() {
-  fclose(file);
-}
+Buffer::~Buffer() {}
 
 void Buffer::add(uint8_t bit) {
   bits[n++] = bit != 0;

@@ -23,24 +23,16 @@ void Decompressor::killHuffman(Node* u) {
 }
 
 void Decompressor::decompress() {
-    printf("DESCOMPACTACAO:\n");
-
     fread(&k, sizeof(uint16_t), 1, in);
-
-    printf("K: %d\n", k);
 
     fread(&t, sizeof(uint32_t), 1, in);
 
-    printf("T: %d\n", t);
-
     uint8_t letter;
-    printf("Letras pré-ordem: ");
+   
     for(int i = 0; i < k; i++) {
         fread(&letter, sizeof(uint8_t), 1, in);
         lettersPreOrder.push_back(letter);
-        printf("%c ", lettersPreOrder[i]);
     }
-    printf("\n");
 
     Buffer buffer(in);
 
@@ -61,27 +53,21 @@ void Decompressor::buildHuffman(Node* &u, Buffer &buffer, int &i, bool left) {
         
         if (root == nullptr) {
             u = root = n;
-            printf("Colocou a raiz: %c\n", u->code());
         } else if (left) {
             u->setLeft(n);
-            printf("Esquerda: %c\n", u->left()->code());
         } else {
             u->setRight(n);
-            printf("Direita: %c\n", u->right()->code());
         }
         return;
     }
 
     if (root == nullptr) {
         u = root = n;
-        printf("Colocou a raiz\n");
     } else {
         if (left) {
             u->setLeft(n);
-            printf("Esquerda\n");
         } else {
             u->setRight(n);
-            printf("Direita\n");
         }
     }
 

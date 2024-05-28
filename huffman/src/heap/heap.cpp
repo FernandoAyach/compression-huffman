@@ -18,7 +18,6 @@ void MinHeap::insert(Node *n) {
 }
 
 Node* MinHeap::extract() {
-  write();
   Node* min = this->v[0];
   v[0] = v[size() - 1];
   v.pop_back();
